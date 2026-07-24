@@ -1,0 +1,86 @@
+{
+    "doctype": "DocType",
+    "name": "Daily KPI Summary",
+    "module": "Lift Tracker",
+    "autoname": "field:kpi_id",
+    "fields": [
+        {
+            "fieldname": "kpi_id",
+            "label": "KPI ID",
+            "fieldtype": "Data",
+            "unique": 1
+        },
+        {
+            "fieldname": "date",
+            "label": "Date",
+            "fieldtype": "Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "operator",
+            "label": "Operator",
+            "fieldtype": "Link",
+            "options": "Lift Operator"
+        },
+        {
+            "fieldname": "total_cycles",
+            "label": "Total Cycles",
+            "fieldtype": "Int",
+            "default": 0
+        },
+        {
+            "fieldname": "up_cycles",
+            "label": "Up Cycles",
+            "fieldtype": "Int",
+            "default": 0
+        },
+        {
+            "fieldname": "down_cycles",
+            "label": "Down Cycles",
+            "fieldtype": "Int",
+            "default": 0
+        },
+        {
+            "fieldname": "unique_floors_served",
+            "label": "Unique Floors Served",
+            "fieldtype": "Int",
+            "default": 0
+        },
+        {
+            "fieldname": "total_passengers",
+            "label": "Total Passengers",
+            "fieldtype": "Int",
+            "default": 0
+        },
+        {
+            "fieldname": "total_material_kg",
+            "label": "Total Material (kg)",
+            "fieldtype": "Float",
+            "default": 0
+        },
+        {
+            "fieldname": "avg_cycle_duration_sec",
+            "label": "Avg Cycle Duration (sec)",
+            "fieldtype": "Float"
+        },
+        {
+            "fieldname": "peak_hour",
+            "label": "Peak Hour",
+            "fieldtype": "Data"
+        },
+        {
+            "fieldname": "utilization_pct",
+            "label": "Utilization %",
+            "fieldtype": "Float"
+        }
+    ],
+    "indexes": [
+        {
+            "fields": [
+                "date",
+                "operator"
+            ]
+        }
+    ],
+    "controller": "lift_tracker.lift_tracker.doctype.daily_kpi_summary.daily_kpi_summary.DailyKPISummary"
+}

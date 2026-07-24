@@ -1,0 +1,166 @@
+{
+    "actions": [],
+    "autoname": "LC-.#####.",
+    "creation": "2026-07-21 23:57:30.890009",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "cycle_id",
+        "operator",
+        "operator_name",
+        "date",
+        "time",
+        "start_floor",
+        "end_floor",
+        "direction",
+        "load_type",
+        "passenger_count",
+        "material_weight_kg",
+        "duration_seconds",
+        "notes",
+        "synced_from_mobile",
+        "mobile_sync_id"
+    ],
+    "fields": [
+        {
+            "fieldname": "cycle_id",
+            "fieldtype": "Data",
+            "label": "Cycle ID",
+            "read_only": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "operator",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Operator",
+            "options": "Lift Operator",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "operator.operator_name",
+            "fieldname": "operator_name",
+            "fieldtype": "Data",
+            "label": "Operator Name",
+            "read_only": 1
+        },
+        {
+            "default": "Today",
+            "fieldname": "date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Date",
+            "reqd": 1
+        },
+        {
+            "default": "Now",
+            "fieldname": "time",
+            "fieldtype": "Time",
+            "in_list_view": 1,
+            "label": "Time",
+            "reqd": 1
+        },
+        {
+            "fieldname": "start_floor",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Start Floor",
+            "reqd": 1
+        },
+        {
+            "fieldname": "end_floor",
+            "fieldtype": "Int",
+            "label": "End Floor",
+            "reqd": 1
+        },
+        {
+            "fieldname": "direction",
+            "fieldtype": "Select",
+            "label": "Direction",
+            "options": "UP\nDOWN",
+            "reqd": 1
+        },
+        {
+            "fieldname": "load_type",
+            "fieldtype": "Select",
+            "label": "Load Type",
+            "options": "MATERIAL\nWORKERS\nBOTH",
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "passenger_count",
+            "fieldtype": "Int",
+            "label": "Passenger Count"
+        },
+        {
+            "default": "0",
+            "fieldname": "material_weight_kg",
+            "fieldtype": "Float",
+            "label": "Material Weight (kg)"
+        },
+        {
+            "fieldname": "duration_seconds",
+            "fieldtype": "Int",
+            "label": "Duration (seconds)"
+        },
+        {
+            "fieldname": "notes",
+            "fieldtype": "Small Text",
+            "label": "Notes"
+        },
+        {
+            "default": "0",
+            "fieldname": "synced_from_mobile",
+            "fieldtype": "Check",
+            "label": "Synced from Mobile"
+        },
+        {
+            "fieldname": "mobile_sync_id",
+            "fieldtype": "Data",
+            "label": "Mobile Sync ID",
+            "unique": 1
+        }
+    ],
+    "links": [],
+    "modified": "2026-07-22 01:29:12.359402",
+    "modified_by": "Administrator",
+    "module": "Lift Tracker",
+    "name": "Lift Cycle",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "if_owner": 1,
+            "read": 1,
+            "role": "Lift Operator",
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Site Manager",
+            "write": 1
+        },
+        {
+            "read": 1,
+            "report": 1,
+            "role": "Project Manager"
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "read": 1,
+            "role": "System Manager",
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1,
+    "track_seen": 1,
+    "track_views": 1,
+    "controller": "lift_tracker.lift_tracker.doctype.lift_cycle.lift_cycle.LiftCycle"
+}

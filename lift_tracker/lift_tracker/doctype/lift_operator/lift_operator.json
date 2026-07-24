@@ -1,0 +1,59 @@
+{
+    "doctype": "DocType",
+    "name": "Lift Operator",
+    "module": "Lift Tracker",
+    "autoname": "field:employee_id",
+    "fields": [
+        {
+            "fieldname": "employee_id",
+            "label": "Employee ID",
+            "fieldtype": "Data",
+            "unique": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "operator_name",
+            "label": "Operator Name",
+            "fieldtype": "Data",
+            "reqd": 1
+        },
+        {
+            "fieldname": "user",
+            "label": "User",
+            "fieldtype": "Link",
+            "options": "User",
+            "reqd": 1
+        },
+        {
+            "fieldname": "phone",
+            "label": "Phone",
+            "fieldtype": "Phone"
+        },
+        {
+            "fieldname": "shift",
+            "label": "Shift",
+            "fieldtype": "Select",
+            "options": "MORNING\nEVENING\nNIGHT"
+        },
+        {
+            "fieldname": "is_active",
+            "label": "Active",
+            "fieldtype": "Check",
+            "default": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "Site Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1
+        },
+        {
+            "role": "Lift Operator",
+            "read": 1,
+            "if_owner": 1
+        }
+    ],
+    "controller": "lift_tracker.lift_tracker.doctype.lift_operator.lift_operator.LiftOperator"
+}
