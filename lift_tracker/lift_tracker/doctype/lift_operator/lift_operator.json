@@ -2,14 +2,13 @@
     "doctype": "DocType",
     "name": "Lift Operator",
     "module": "Lift Tracker",
-    "autoname": "field:employee_id",
+    "autoname": "LO-.#####",
     "fields": [
         {
             "fieldname": "employee_id",
             "label": "Employee ID",
             "fieldtype": "Data",
-            "unique": 1,
-            "reqd": 1
+            "unique": 0
         },
         {
             "fieldname": "operator_name",
