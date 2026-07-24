@@ -50,8 +50,7 @@
         },
         {
             "role": "Lift Operator",
-            "read": 1,
-            "if_owner": 1
+            "read": 1
         }
     ],
     "controller": "lift_tracker.lift_tracker.doctype.lift_operator.lift_operator.LiftOperator"

@@ -8,8 +8,12 @@ import json
 class LiftCycle(Document):
     def before_insert(self):
         self.set_cycle_id()
+        if not self.operator and frappe.session.user:
+            self.operator = frappe.db.get_value("Lift Operator", {"user": frappe.session.user}, "name")
 
     def validate(self):
+        if not self.operator and frappe.session.user:
+            self.operator = frappe.db.get_value("Lift Operator", {"user": frappe.session.user}, "name")
         self.validate_floors()
         self.set_cycle_id()
         self.calculate_duration()
@@ -50,6 +54,9 @@ def bulk_sync(cycles_json):
         try:
             mobile_sync_id = cycle_data.get("mobile_sync_id")
 
+            if not cycle_data.get("operator") and frappe.session.user:
+                cycle_data["operator"] = frappe.db.get_value("Lift Operator", {"user": frappe.session.user}, "name")
+
             # Check if already synced
             existing = frappe.db.get_value("Lift Cycle", {"mobile_sync_id": mobile_sync_id}, "name")
 
@@ -79,18 +86,16 @@ def bulk_sync(cycles_json):
 def get_operator_dashboard(operator_id, from_date=None, to_date=None):
     """Dashboard API for mobile app"""
     if not from_date:
-        from_date = getdate().replace(day=1)  # First of month
+        from_date = getdate().replace(day=1)
     if not to_date:
         to_date = getdate()
 
-    # Get cycles
     cycles = frappe.get_all("Lift Cycle",
         filters={"operator": operator_id, "date": ["between", [from_date, to_date]]},
         fields=["*"],
         order_by="date desc, time desc"
     )
 
-    # Calculate KPIs
     total = len(cycles)
     up = sum(1 for c in cycles if c.direction == "UP")
     down = sum(1 for c in cycles if c.direction == "DOWN")
@@ -101,7 +106,6 @@ def get_operator_dashboard(operator_id, from_date=None, to_date=None):
         floors.add(c.start_floor)
         floors.add(c.end_floor)
 
-    # Peak hour analysis
     hour_counts = {}
     for c in cycles:
         if c.time:
@@ -135,7 +139,6 @@ def get_site_kpis(from_date, to_date):
         fields=["operator", "direction", "passenger_count", "material_weight_kg", "duration_seconds", "date", "time"]
     )
 
-    # Aggregate by operator
     operator_stats = {}
     for c in cycles:
         op = c.operator
@@ -149,7 +152,6 @@ def get_site_kpis(from_date, to_date):
         s["material"] += c.material_weight_kg or 0
         s["duration"] += c.duration_seconds or 0
 
-    # Daily trends
     daily = {}
     for c in cycles:
         d = str(c.date)
@@ -169,4 +171,3 @@ def get_site_kpis(from_date, to_date):
             "date_range": f"{from_date} to {to_date}"
         }
     }
-

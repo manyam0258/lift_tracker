@@ -23,6 +23,11 @@ def bulk_sync(cycles):
         try:
             mobile_sync_id = cycle_data.get("mobile_sync_id")
             
+            if not cycle_data.get("operator") and frappe.session.user:
+                op = frappe.db.get_value("Lift Operator", {"user": frappe.session.user}, "name")
+                if op:
+                    cycle_data["operator"] = op
+            
             # Set doctype if not present
             if "doctype" not in cycle_data:
                 cycle_data["doctype"] = "Lift Cycle"
@@ -32,7 +37,6 @@ def bulk_sync(cycles):
             
             if existing:
                 doc = frappe.get_doc("Lift Cycle", existing)
-                # Update only allowed fields
                 allowed_fields = ["date", "time", "start_floor", "end_floor", "direction", 
                                 "load_type", "passenger_count", "material_weight_kg", 
                                 "notes", "operator", "cycle_id"]

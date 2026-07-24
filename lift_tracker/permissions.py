@@ -6,8 +6,9 @@ def lift_cycle_permission_query(user):
     if not user:
         user = frappe.session.user
     
-    # Site Manager and Project Manager see all
-    if "Site Manager" in frappe.get_roles(user) or "Project Manager" in frappe.get_roles(user):
+    roles = frappe.get_roles(user)
+    # Site Manager, Project Manager, System Manager, Administrator see all
+    if any(r in roles for r in ["Site Manager", "Project Manager", "System Manager", "Administrator"]):
         return ""
     
     # Lift Operator sees only their own
@@ -19,8 +20,14 @@ def lift_cycle_permission_query(user):
 
 
 def lift_cycle_has_permission(doc, user, ptype="read"):
-    if "Site Manager" in frappe.get_roles(user) or "Project Manager" in frappe.get_roles(user):
+    roles = frappe.get_roles(user)
+    if any(r in roles for r in ["Site Manager", "Project Manager", "System Manager", "Administrator"]):
         return True
     
-    operator = frappe.db.get_value("Lift Operator", {"user": user}, "name")
-    return operator and doc.operator == operator
+    if "Lift Operator" in roles:
+        if ptype in ("create", "write"):
+            return True
+        operator = frappe.db.get_value("Lift Operator", {"user": user}, "name")
+        return bool(operator and (not doc.operator or doc.operator == operator))
+    
+    return False
