@@ -13,6 +13,8 @@
         "start_floor",
         "end_floor",
         "direction",
+        "intermediate_stops",
+        "stop_count",
         "load_type",
         "passenger_count",
         "material_weight_kg",
@@ -81,6 +83,18 @@
             "reqd": 1
         },
         {
+            "fieldname": "intermediate_stops",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Intermediate Stops"
+        },
+        {
+            "default": "0",
+            "fieldname": "stop_count",
+            "fieldtype": "Int",
+            "label": "Total Stops Count"
+        },
+        {
             "fieldname": "load_type",
             "fieldtype": "Select",
             "label": "Load Type",
@@ -123,7 +137,7 @@
         }
     ],
     "links": [],
-    "modified": "2026-07-22 01:29:12.359402",
+    "modified": "2026-07-25 10:10:00.000000",
     "modified_by": "Administrator",
     "module": "Lift Tracker",
     "name": "Lift Cycle",
@@ -131,7 +145,6 @@
     "permissions": [
         {
             "create": 1,
-            "if_owner": 1,
             "read": 1,
             "role": "Lift Operator",
             "write": 1

@@ -38,7 +38,8 @@ def bulk_sync(cycles):
             if existing:
                 doc = frappe.get_doc("Lift Cycle", existing)
                 allowed_fields = ["date", "time", "start_floor", "end_floor", "direction", 
-                                "load_type", "passenger_count", "material_weight_kg", 
+                                "intermediate_stops", "stop_count", "load_type", 
+                                "passenger_count", "material_weight_kg", 
                                 "notes", "operator", "cycle_id"]
                 for field in allowed_fields:
                     if field in cycle_data:
